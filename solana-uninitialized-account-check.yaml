@@ -1,0 +1,29 @@
+id: solana-uninitialized-account-check
+
+info:
+  name: Solana Uninitialized Account Check Missing
+  author: geeknik
+  severity: high
+  description: |
+    Detects when a Solana smart contract fails to check if an account has been properly initialized before using it, which could lead to logic vulnerabilities.
+  remediation: |
+    Add an is_initialized field to account structures and verify it before processing account data.
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,initialization,validation
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "pub\\s+struct\\s+\\w+\\s*\\{"
+        condition: and
+        negative:
+          - "is_initialized\\s*:\\s*bool"
+          - "discriminator"
