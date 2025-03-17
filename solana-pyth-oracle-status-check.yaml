@@ -1,0 +1,30 @@
+id: solana-pyth-oracle-status-check
+
+info:
+  name: Solana Pyth Oracle Status Validation Missing
+  author: geeknik
+  severity: high
+  description: |
+    Detects when a program uses Pyth oracle price data without checking if the status is valid, which could lead to using stale or invalid price data.
+  remediation: |
+    Always check the Pyth price status before using the price: `if pyth_price.agg.status != PriceStatus::Trading { return Err(ErrorCode::InvalidPythConfig); }`
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,oracle,pyth
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "pyth::Price"
+          - "get_pyth_price"
+        condition: or
+        negative:
+          - "pyth_price\\.agg\\.status"
+          - "PriceStatus::Trading"
