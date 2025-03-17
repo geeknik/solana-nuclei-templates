@@ -25,6 +25,8 @@ file:
           - "pyth::Price"
           - "get_pyth_price"
         condition: or
-        negative:
+        regex:
           - "pyth_price\\.agg\\.status"
           - "PriceStatus::Trading"
+        negative: true
+        condition: or
