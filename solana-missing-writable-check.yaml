@@ -1,0 +1,30 @@
+id: solana-missing-writable-check
+
+info:
+  name: Solana Missing Writable Account Check
+  author: geeknik
+  severity: high
+  description: |
+    Detects when a Solana smart contract modifies account data without verifying the account is marked as writable, which can lead to failed transactions in production.
+  remediation: |
+    Always verify account writability using `if !account.is_writable { return Err(ProgramError::InvalidAccountData); }` before modifying account data.
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,writable,validation
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "\\w+\\.data\\.borrow_mut\\(\\)"
+          - "\\w+\\.try_borrow_mut_data\\(\\)"
+        condition: or
+        negative:
+          - "is_writable"
+          - "InvalidAccountData"
