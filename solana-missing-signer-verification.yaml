@@ -23,7 +23,8 @@ file:
         part: body
         regex:
           - "fn\\s+[a-zA-Z0-9_]+\\s*\\([^\\)]*Context\\s*<[^>]*>\\s*[^{]*\\{"
-        condition: and
-        negative:
+        regex:
           - "is_signer"
           - "MissingRequiredSignature"
+        condition: and
+        negative: true
