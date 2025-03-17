@@ -27,8 +27,10 @@ file:
           - "\\b\\w+\\s*\\*\\s*\\w+\\b"
           - "\\b\\w+\\s*/\\s*\\w+\\b"
         condition: or
-        negative: true
+        words:
           - "checked_add"
           - "checked_sub"
           - "checked_mul"
           - "checked_div"
+        negative: true
+        condition: or
