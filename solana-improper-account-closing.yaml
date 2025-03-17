@@ -1,0 +1,28 @@
+id: solana-improper-account-closing
+
+info:
+  name: Solana Improper Account Closing Vulnerability
+  author: geeknik
+  severity: high
+  description: |
+    Detects when a program closes an account without properly zeroing its data or marking it with a CLOSED_ACCOUNT_DISCRIMINATOR, allowing potential reuse attacks.
+  remediation: |
+    When closing accounts: 1) Transfer lamports 2) Zero out account data 3) Write a CLOSED_ACCOUNT_DISCRIMINATOR to the start of account data
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,account-closing
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "\\*\\*\\w+\\.lamports\\.borrow_mut\\(\\)\\s*=\\s*0"
+        negative:
+          - "for\\s+byte\\s+in\\s+data\\.deref_mut\\(\\)\\.iter_mut\\(\\)"
+          - "CLOSED_ACCOUNT_DISCRIMINATOR"
