@@ -1,0 +1,34 @@
+id: solana-integer-overflow-underflow
+
+info:
+  name: Solana Integer Overflow/Underflow Vulnerability
+  author: geeknik
+  severity: high
+  description: |
+    Detects potential integer overflow/underflow vulnerabilities in Solana smart contracts. These occur when arithmetic operations are performed without proper checks, which can lead to unexpected values and potentially exploitable behaviors.
+  remediation: |
+    Use Rust's checked arithmetic methods (`checked_add`, `checked_sub`, `checked_div`, `checked_mul`) instead of standard operators (+, -, *, /).
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,overflow
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "\\b\\w+\\s*\\+\\s*\\w+\\b"
+          - "\\b\\w+\\s*-\\s*\\w+\\b"
+          - "\\b\\w+\\s*\\*\\s*\\w+\\b"
+          - "\\b\\w+\\s*/\\s*\\w+\\b"
+        condition: or
+        negative: true
+          - "checked_add"
+          - "checked_sub"
+          - "checked_mul"
+          - "checked_div"
