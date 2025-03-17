@@ -1,0 +1,30 @@
+id: solana-duplicate-mutable-accounts
+
+info:
+  name: Solana Duplicate Mutable Accounts Vulnerability
+  author: geeknik
+  severity: high
+  description: |
+    Detects when a program fails to check if two mutable accounts are the same, which can lead to data corruption when the same account is passed for both parameters.
+  remediation: |
+    Add explicit checks to prevent the same account from being used for multiple mutable parameters: `if account_a.key() == account_b.key() { return Err(ProgramError::InvalidArgument); }`
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,duplicate-accounts
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "\\w+:\\s*Account<[^>]*,\\s*\\w+>"
+          - "\\w+:\\s*&mut\\s*Account<[^>]*>"
+        condition: and
+        negative:
+          - "if\\s+[^{]*\\.key\\(\\)\\s*==\\s*[^{]*\\.key\\(\\)"
+          - "require_keys_neq!\\("
