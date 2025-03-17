@@ -1,0 +1,29 @@
+id: solana-division-by-zero
+
+info:
+  name: Solana Division by Zero Vulnerability
+  author: geeknik
+  severity: high
+  description: |
+    Detects potential division by zero operations in Solana smart contracts that could cause program panics and transaction failures.
+  remediation: |
+    Always check if the divisor is zero before performing division operations.
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,division,panic
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "\\b\\w+\\s*/\\s*\\w+\\b"
+        negative:
+          - "if\\s+[^{]*\\b\\w+\\s*==\\s*0\\b[^{]*\\{"
+          - "checked_div"
+          - "require_ne!\\([^,]*,\\s*0"
