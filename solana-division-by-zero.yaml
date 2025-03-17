@@ -23,7 +23,9 @@ file:
         part: body
         regex:
           - "\\b\\w+\\s*/\\s*\\w+\\b"
-        negative:
+        regex:
           - "if\\s+[^{]*\\b\\w+\\s*==\\s*0\\b[^{]*\\{"
           - "checked_div"
           - "require_ne!\\([^,]*,\\s*0"
+        negative: true
+        condition: or
