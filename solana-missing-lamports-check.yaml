@@ -26,7 +26,9 @@ file:
           - "\\w+\\.try_borrow_data\\(\\)"
           - "Account::<[^>]*>::try_from"
         condition: or
-        negative:
+        regex:
           - "\\w+\\.lamports\\(\\)"
           - "try_borrow_lamports\\(\\)"
           - "if\\s+[^{]*lamports[^{]*>\\s*0"
+        negative: true
+        condition: or
