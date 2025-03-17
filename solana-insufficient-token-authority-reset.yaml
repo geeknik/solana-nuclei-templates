@@ -1,0 +1,30 @@
+id: solana-insufficient-token-authority-reset
+
+info:
+  name: Solana Insufficient Token Authority Reset
+  author: geeknik
+  severity: high
+  description: |
+    Detects when a token ownership transfer doesn't properly reset delegate permissions, allowing unauthorized spending even after ownership change.
+  remediation: |
+    After changing token ownership, reset all delegated authorities: `account.delegate = COption::None; account.delegated_amount = 0;`
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,token,authority
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "account\\.owner\\s*=\\s*authority"
+          - "set_authority\\([^,]*,\\s*AuthorityType::AccountOwner"
+        condition: or
+        negative:
+          - "account\\.delegate\\s*=\\s*COption::None"
+          - "account\\.delegated_amount\\s*=\\s*0"
