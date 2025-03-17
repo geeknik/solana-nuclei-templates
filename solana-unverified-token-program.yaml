@@ -1,0 +1,32 @@
+id: solana-unverified-token-program
+
+info:
+  name: Solana Unverified Token Program
+  author: geeknik
+  severity: critical
+  description: |
+    Detects when a program interacts with SPL tokens without verifying the token program's address, allowing attackers to substitute malicious programs.
+  remediation: |
+    Always verify token program ID before invoking token operations: `if token_program.key != &spl_token::ID { return Err(ProgramError::IncorrectProgramId); }`
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,token,program-id
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "spl_token::instruction::\\w+\\("
+          - "spl_token_transfer\\("
+          - "token::transfer\\("
+        condition: or
+        negative:
+          - "if\\s+[^{]*\\.key\\(\\)\\s*!=\\s*&spl_token::ID"
+          - "require_eq!\\([^,]*\\.key\\(\\)[^,]*&spl_token::ID"
+          - "#\\[account\\(address\\s*=\\s*token::ID\\)\\]"
