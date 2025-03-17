@@ -25,8 +25,10 @@ file:
           - "invoke\\([^;]*;\\s*"
           - "spl_token::instruction::\\w+\\([^;]*;\\s*"
         condition: or
-        negative:
+        regex:
           - "\\?;"
           - "\\.map_err\\("
           - "if let Err"
           - "match"
+        negative: true
+        condition: or
