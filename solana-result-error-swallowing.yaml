@@ -23,9 +23,11 @@ file:
         part: body
         regex:
           - "\\w+\\(.*\\)\\s*;\\s*(?!//)(?!\\s*//)"
-        negative:
+        regex:
           - "\\w+\\(.*\\)\\?;"
           - "let\\s+.*=\\s*\\w+\\(.*\\);"
           - "if\\s+let\\s+Err"
           - "\\.map_err\\("
           - "match\\s+\\w+\\(.*\\)"
+        negative: true
+        condition: or
