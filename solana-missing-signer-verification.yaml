@@ -1,0 +1,29 @@
+id: solana-missing-signer-verification
+
+info:
+  name: Solana Missing Signer Verification
+  author: geeknik
+  severity: high
+  description: |
+    Detects when a Solana smart contract function fails to verify that an account has actually signed the transaction. This vulnerability allows unauthorized users to perform actions they shouldn't have permission to execute.
+  remediation: |
+    Add explicit signer checks using `if !account.is_signer { return Err(ProgramError::MissingRequiredSignature); }` or use Anchor's `Signer` constraint.
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,authorization,signer
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "fn\\s+[a-zA-Z0-9_]+\\s*\\([^\\)]*Context\\s*<[^>]*>\\s*[^{]*\\{"
+        condition: and
+        negative:
+          - "is_signer"
+          - "MissingRequiredSignature"
