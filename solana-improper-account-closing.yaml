@@ -23,6 +23,8 @@ file:
         part: body
         regex:
           - "\\*\\*\\w+\\.lamports\\.borrow_mut\\(\\)\\s*=\\s*0"
-        negative:
+        regex:
           - "for\\s+byte\\s+in\\s+data\\.deref_mut\\(\\)\\.iter_mut\\(\\)"
           - "CLOSED_ACCOUNT_DISCRIMINATOR"
+        negative: true
+        condition: or
