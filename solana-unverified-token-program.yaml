@@ -26,7 +26,9 @@ file:
           - "spl_token_transfer\\("
           - "token::transfer\\("
         condition: or
-        negative:
+        regex:
           - "if\\s+[^{]*\\.key\\(\\)\\s*!=\\s*&spl_token::ID"
           - "require_eq!\\([^,]*\\.key\\(\\)[^,]*&spl_token::ID"
           - "#\\[account\\(address\\s*=\\s*token::ID\\)\\]"
+        negative: true
+        condition: or
