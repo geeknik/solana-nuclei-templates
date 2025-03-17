@@ -1,0 +1,32 @@
+id: solana-unhandled-cpi-result
+
+info:
+  name: Solana Unhandled CPI Result
+  author: geeknik
+  severity: high
+  description: |
+    Detects when a program calls external programs without properly handling the returned Result, potentially ignoring errors.
+  remediation: |
+    Always check the Result returned by CPI calls using the `?` operator or explicit error handling.
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,cpi,error-handling
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "invoke\\([^;]*;\\s*"
+          - "spl_token::instruction::\\w+\\([^;]*;\\s*"
+        condition: or
+        negative:
+          - "\\?;"
+          - "\\.map_err\\("
+          - "if let Err"
+          - "match"
