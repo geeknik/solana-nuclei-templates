@@ -24,7 +24,9 @@ file:
         regex:
           - "\\w+:\\s*Account<[^>]*,\\s*\\w+>"
           - "\\w+:\\s*&mut\\s*Account<[^>]*>"
-        condition: and
-        negative:
+        condition: or
+        regex:
           - "if\\s+[^{]*\\.key\\(\\)\\s*==\\s*[^{]*\\.key\\(\\)"
           - "require_keys_neq!\\("
+        negative: true
+        condigition: and
