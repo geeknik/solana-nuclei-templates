@@ -1,0 +1,30 @@
+id: solana-missing-account-owner-check
+
+info:
+  name: Solana Missing Account Owner Check
+  author: geeknik
+  severity: high
+  description: |
+    Detects when a Solana program fails to verify the owner of an account before reading or modifying it. Without proper ownership checks, a malicious account created by an attacker could be passed in, potentially leading to security breaches.
+  remediation: |
+    Always verify account ownership before reading or modifying account data: `if account.owner != &expected_program_id { return Err(ProgramError::IllegalOwner); }`
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,ownership,validation
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "account.*\\.data\\.borrow\\(\\)"
+          - "account.*\\.try_borrow_data\\(\\)"
+        condition: or
+        negative:
+          - "owner\\s*!=|ne\\("
+          - "IllegalOwner"
