@@ -1,0 +1,30 @@
+id: solana-sysvar-address-check-missing
+
+info:
+  name: Solana Sysvar Address Validation Missing
+  author: security-researcher
+  severity: high
+  description: |
+    Detects when a program accepts a sysvar account without verifying its address, allowing attackers to pass forged system accounts.
+  remediation: |
+    Validate sysvar account addresses against their known values: `require_eq!(ctx.accounts.rent.key(), sysvar::rent::ID);`
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,sysvar,validation
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "sysvar::\\w+::load"
+          - "sysvar::\\w+::get"
+        condition: or
+        negative:
+          - "if\\s+[^{]*\\.key\\(\\)\\s*!=\\s*sysvar::\\w+::ID"
+          - "require_eq!\\([^,]*\\.key\\(\\)[^,]*sysvar::\\w+::ID"
