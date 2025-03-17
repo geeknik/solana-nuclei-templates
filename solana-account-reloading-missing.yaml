@@ -1,0 +1,29 @@
+id: solana-account-reloading-missing
+
+info:
+  name: Solana Account Reloading Missing After CPI
+  author: geeknik
+  severity: high
+  description: |
+    Detects when a program reads account data after a CPI without reloading it, leading to stale data being used in calculations.
+  remediation: |
+    After any CPI that modifies an account, call the reload() method on the account to refresh its state.
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,cpi,reload
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "CpiContext::new\\(.*\\).*\\?;"
+          - "invoke\\(.*\\).*\\?;"
+        condition: or
+        negative:
+          - "\\.reload\\(\\)\\?;"
