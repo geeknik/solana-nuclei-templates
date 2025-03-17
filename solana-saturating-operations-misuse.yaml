@@ -1,0 +1,28 @@
+id: solana-saturating-operations-misuse
+
+info:
+  name: Solana Saturating Operations Misuse
+  author: geeknik
+  severity: high
+  description: |
+    Detects the use of saturating operations (saturating_add, saturating_sub, saturating_mul) which can lead to inaccurate calculation results in certain scenarios.
+  remediation: |
+    Use checked operations (checked_add, checked_sub, checked_mul) with proper error handling instead of saturating operations.
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,calculation,arithmetic
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "saturating_add"
+          - "saturating_sub"
+          - "saturating_mul"
+        condition: or
