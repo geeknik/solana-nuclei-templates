@@ -1,0 +1,32 @@
+id: solana-missing-lamports-check
+
+info:
+  name: Solana Missing Lamports Check
+  author: geeknik
+  severity: medium
+  description: |
+    Detects when a program reads from account data without checking if the account has any lamports, which can lead to reading from deleted accounts.
+  remediation: |
+    Before reading account data, verify the account has lamports: `if **account.try_borrow_lamports()? > 0 { /* safe to read data */ }`
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,lamports,validation
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "\\w+\\.data\\.borrow\\(\\)"
+          - "\\w+\\.try_borrow_data\\(\\)"
+          - "Account::<[^>]*>::try_from"
+        condition: or
+        negative:
+          - "\\w+\\.lamports\\(\\)"
+          - "try_borrow_lamports\\(\\)"
+          - "if\\s+[^{]*lamports[^{]*>\\s*0"
