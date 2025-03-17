@@ -1,0 +1,31 @@
+id: solana-result-error-swallowing
+
+info:
+  name: Solana Result Error Swallowing
+  author: geeknik
+  severity: high
+  description: |
+    Detects when a program calls functions returning Result types without propagating or handling errors, potentially ignoring critical failures.
+  remediation: |
+    Always handle Result types with ? operator or explicit error handling to ensure errors aren't silently ignored.
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,error-handling
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "\\w+\\(.*\\)\\s*;\\s*(?!//)(?!\\s*//)"
+        negative:
+          - "\\w+\\(.*\\)\\?;"
+          - "let\\s+.*=\\s*\\w+\\(.*\\);"
+          - "if\\s+let\\s+Err"
+          - "\\.map_err\\("
+          - "match\\s+\\w+\\(.*\\)"
