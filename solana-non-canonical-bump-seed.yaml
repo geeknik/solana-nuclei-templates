@@ -25,6 +25,8 @@ file:
           - "create_program_address\\([^)]*\\[bump\\]"
           - "create_program_address\\([^)]*&\\[bump\\]"
         condition: or
-        negative:
+        regex:
           - "let\\s+\\([^,]*,\\s*expected_bump\\)\\s*=\\s*Pubkey::find_program_address"
           - "if\\s+expected_bump\\s*!=\\s*bump"
+        negative: true
+        condition: or
