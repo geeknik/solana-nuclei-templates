@@ -1,0 +1,27 @@
+id: solana-loss-of-precision
+
+info:
+  name: Solana Loss of Precision Vulnerability
+  author: geeknik
+  severity: high
+  description: |
+    Detects potential loss of precision vulnerabilities in Solana smart contracts. Using try_round_u64() can lead to precision problems that enable arbitrage attacks.
+  remediation: |
+    Use try_floor_u64() instead of try_round_u64() to prevent precision-based arbitrage attacks.
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,precision,decimal
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "try_round_u64\\(\\)"
+        negative:
+          - "try_floor_u64\\(\\)"
