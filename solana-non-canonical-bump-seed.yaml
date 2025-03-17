@@ -1,0 +1,30 @@
+id: solana-non-canonical-bump-seed
+
+info:
+  name: Solana Non-Canonical Bump Seed Vulnerability
+  author: geeknik
+  severity: high
+  description: |
+    Detects when a program uses create_program_address() without verifying the bump seed is canonical, allowing PDA manipulation.
+  remediation: |
+    Use find_program_address() to get the canonical bump, then validate user-provided bumps against it.
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,pda,bump-seed
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "create_program_address\\([^)]*\\[bump\\]"
+          - "create_program_address\\([^)]*&\\[bump\\]"
+        condition: or
+        negative:
+          - "let\\s+\\([^,]*,\\s*expected_bump\\)\\s*=\\s*Pubkey::find_program_address"
+          - "if\\s+expected_bump\\s*!=\\s*bump"
