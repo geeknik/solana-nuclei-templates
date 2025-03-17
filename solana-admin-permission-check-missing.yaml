@@ -1,0 +1,30 @@
+id: solana-admin-permission-check-missing
+
+info:
+  name: Solana Missing Admin Permission Check
+  author: geeknik
+  severity: critical
+  description: |
+    Detects when a program with administrative functions fails to properly validate the caller's permissions, allowing unauthorized users to execute privileged operations.
+  remediation: |
+    Hardcode administrator keys and validate against them: `if admin_account.key != &ADMIN_PUBKEY { return Err(ProgramError::InvalidArgument); }`
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,authorization,admin
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "fn\\s+init_\\w+|fn\\s+initialize_\\w+"
+          - "pub\\s+fn\\s+upgrade|pub\\s+fn\\s+set_authority"
+        condition: or
+        negative:
+          - "pub\\s+const\\s+ADMIN_PUBKEY|AUTHORITY_PUBKEY"
+          - "if\\s+[^{]*\\.key\\(\\)\\s*!=\\s*[^{]*ADMIN|AUTHORITY|UPGRADER"
