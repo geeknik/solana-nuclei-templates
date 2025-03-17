@@ -1,0 +1,32 @@
+id: solana-unchecked-account-initialization
+
+info:
+  name: Solana Unchecked Account Initialization
+  author: geeknik
+  severity: high
+  description: |
+    Detects when a program initializes an account without checking if it has already been initialized, allowing accounts to be reinitialized with malicious data.
+  remediation: |
+    Add initialization checks before writing to accounts: `if account.is_initialized { return Err(ProgramError::AccountAlreadyInitialized); }`
+  reference:
+    - https://github.com/slowmist/solana-smart-contract-security-best-practices
+  metadata:
+    verified: true
+  tags: audit,solana,smart-contract,initialization,validation
+
+file:
+  - extensions:
+      - rs
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "pub\\s+fn\\s+initialize\\("
+          - "pub\\s+fn\\s+init\\("
+          - "\\w+_init\\("
+        condition: or
+        negative:
+          - "if\\s+[^{]*\\.is_initialized"
+          - "AccountAlreadyInitialized"
+          - "#\\[account\\(init"
