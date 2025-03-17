@@ -23,7 +23,8 @@ file:
         part: body
         regex:
           - "pub\\s+struct\\s+\\w+\\s*\\{"
-        condition: and
-        negative:
+        regex:
           - "is_initialized\\s*:\\s*bool"
           - "discriminator"
+        negative: true
+        condition: and
