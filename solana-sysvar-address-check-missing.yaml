@@ -25,6 +25,8 @@ file:
           - "sysvar::\\w+::load"
           - "sysvar::\\w+::get"
         condition: or
-        negative:
+        regex:
           - "if\\s+[^{]*\\.key\\(\\)\\s*!=\\s*sysvar::\\w+::ID"
           - "require_eq!\\([^,]*\\.key\\(\\)[^,]*sysvar::\\w+::ID"
+        negative: true
+        condition: or
