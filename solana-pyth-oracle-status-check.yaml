@@ -20,11 +20,11 @@ file:
 
     matchers:
       - type: regex
-        part: body
         regex:
           - "pyth::Price"
           - "get_pyth_price"
         condition: or
+      - type: regex
         regex:
           - "pyth_price\\.agg\\.status"
           - "PriceStatus::Trading"
