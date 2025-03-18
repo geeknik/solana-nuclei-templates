@@ -20,9 +20,9 @@ file:
 
     matchers:
       - type: regex
-        part: body
         regex:
           - "\\w+\\(.*\\)\\s*;\\s*(?!//)(?!\\s*//)"
+      - type: regex
         regex:
           - "\\w+\\(.*\\)\\?;"
           - "let\\s+.*=\\s*\\w+\\(.*\\);"
