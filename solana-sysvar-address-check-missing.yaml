@@ -20,11 +20,11 @@ file:
 
     matchers:
       - type: regex
-        part: body
         regex:
           - "sysvar::\\w+::load"
           - "sysvar::\\w+::get"
         condition: or
+      - type: regex
         regex:
           - "if\\s+[^{]*\\.key\\(\\)\\s*!=\\s*sysvar::\\w+::ID"
           - "require_eq!\\([^,]*\\.key\\(\\)[^,]*sysvar::\\w+::ID"
