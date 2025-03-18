@@ -23,6 +23,7 @@ file:
         part: body
         regex:
           - "\\*\\*\\w+\\.lamports\\.borrow_mut\\(\\)\\s*=\\s*0"
+      - type: regex
         regex:
           - "for\\s+byte\\s+in\\s+data\\.deref_mut\\(\\)\\.iter_mut\\(\\)"
           - "CLOSED_ACCOUNT_DISCRIMINATOR"
