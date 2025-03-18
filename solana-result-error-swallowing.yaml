@@ -17,17 +17,18 @@ info:
 file:
   - extensions:
       - rs
-
+    matchers-condition: and
     matchers:
       - type: regex
         regex:
-          - "\\w+\\(.*\\)\\s*;\\s*(?!//)(?!\\s*//)"
+          - '\w+\(.*\)\s*;\s*(?!//)(?!\s*//)'
       - type: regex
+        part: body
         regex:
-          - "\\w+\\(.*\\)\\?;"
-          - "let\\s+.*=\\s*\\w+\\(.*\\);"
-          - "if\\s+let\\s+Err"
-          - "\\.map_err\\("
-          - "match\\s+\\w+\\(.*\\)"
+          - '\w+\(.*\)\?;'
+          - 'let\s+.*=\s*\w+\(.*\);'
+          - 'if\s+let\s+Err'
+          - '\.map_err\('
+          - 'match\s+\w+\(.*\)'
         negative: true
         condition: or
