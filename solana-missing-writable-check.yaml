@@ -25,6 +25,7 @@ file:
           - "\\w+\\.data\\.borrow_mut\\(\\)"
           - "\\w+\\.try_borrow_mut_data\\(\\)"
         condition: or
+      - type: regex
         regex:
           - "is_writable"
           - "InvalidAccountData"
