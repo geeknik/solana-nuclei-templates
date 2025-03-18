@@ -25,6 +25,7 @@ file:
           - "fn\\s+init_\\w+|fn\\s+initialize_\\w+"
           - "pub\\s+fn\\s+upgrade|pub\\s+fn\\s+set_authority"
         condition: or
+      - type: regex
         regex:
           - "pub\\s+const\\s+ADMIN_PUBKEY|AUTHORITY_PUBKEY"
           - "if\\s+[^{]*\\.key\\(\\)\\s*!=\\s*[^{]*ADMIN|AUTHORITY|UPGRADER"
