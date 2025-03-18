@@ -27,7 +27,7 @@ file:
           - "\\b\\w+\\s*\\*\\s*\\w+\\b"
           - "\\b\\w+\\s*/\\s*\\w+\\b"
         condition: or
-      - type: words
+      - type: word
         part: body
         words:
           - "checked_add"
