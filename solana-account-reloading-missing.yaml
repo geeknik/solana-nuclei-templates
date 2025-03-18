@@ -25,6 +25,7 @@ file:
           - "CpiContext::new\\(.*\\).*\\?;"
           - "invoke\\(.*\\).*\\?;"
         condition: or
+      - type: regex
         regex:
           - "\\.reload\\(\\)\\?;"
         negative: true
