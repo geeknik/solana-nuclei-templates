@@ -20,12 +20,12 @@ file:
 
     matchers:
       - type: regex
-        part: body
         regex:
           - "pub\\s+fn\\s+initialize\\("
           - "pub\\s+fn\\s+init\\("
           - "\\w+_init\\("
         condition: or
+      - type: regex
         regex:
           - "if\\s+[^{]*\\.is_initialized"
           - "AccountAlreadyInitialized"
