@@ -25,6 +25,7 @@ file:
           - "account.*\\.data\\.borrow\\(\\)"
           - "account.*\\.try_borrow_data\\(\\)"
         condition: or
+      - type: regex
         regex:
           - "owner\\s*!=|ne\\("
           - "IllegalOwner"
