@@ -23,6 +23,7 @@ file:
         part: body
         regex:
           - "try_round_u64\\(\\)"
+      - type: regex
         regex:
           - "try_floor_u64\\(\\)"
         negative: true
