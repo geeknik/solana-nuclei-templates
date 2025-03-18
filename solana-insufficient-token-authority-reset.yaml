@@ -25,6 +25,7 @@ file:
           - "account\\.owner\\s*=\\s*authority"
           - "set_authority\\([^,]*,\\s*AuthorityType::AccountOwner"
         condition: or
+      - type: regex
         regex:
           - "account\\.delegate\\s*=\\s*COption::None"
           - "account\\.delegated_amount\\s*=\\s*0"
