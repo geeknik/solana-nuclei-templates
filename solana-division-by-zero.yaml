@@ -23,6 +23,7 @@ file:
         part: body
         regex:
           - "\\b\\w+\\s*/\\s*\\w+\\b"
+      - type: regex
         regex:
           - "if\\s+[^{]*\\b\\w+\\s*==\\s*0\\b[^{]*\\{"
           - "checked_div"
