@@ -20,9 +20,9 @@ file:
 
     matchers:
       - type: regex
-        part: body
         regex:
           - "pub\\s+struct\\s+\\w+\\s*\\{"
+      - type: regex
         regex:
           - "is_initialized\\s*:\\s*bool"
           - "discriminator"
