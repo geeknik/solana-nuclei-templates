@@ -21,7 +21,7 @@ file:
     matchers:
       - type: regex
         regex:
-          - '\w+\(.*\)\s*;\s*(?!//)(?!\s*//)'
+          - '\w+\(.*\)\s*;\s*[^/]'
       - type: regex
         part: body
         regex:
