@@ -20,11 +20,11 @@ file:
 
     matchers:
       - type: regex
-        part: body
         regex:
           - "invoke\\([^;]*;\\s*"
           - "spl_token::instruction::\\w+\\([^;]*;\\s*"
         condition: or
+      - type: regex
         regex:
           - "\\?;"
           - "\\.map_err\\("
