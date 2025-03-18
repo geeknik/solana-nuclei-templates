@@ -23,6 +23,7 @@ file:
         part: body
         regex:
           - "fn\\s+[a-zA-Z0-9_]+\\s*\\([^\\)]*Context\\s*<[^>]*>\\s*[^{]*\\{"
+      - type: regex
         regex:
           - "is_signer"
           - "MissingRequiredSignature"
